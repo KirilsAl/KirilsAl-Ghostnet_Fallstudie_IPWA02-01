@@ -1,4 +1,8 @@
 package de.kirils.ghostnet.ghostnetfallstudie.model;
 
-public class NetStatus {
+public enum NetStatus {
+    GEMELDET,
+    BERGUNG_BEVORSTEHEND,
+    GEBORGEN,
+    VERSCHOLLEN
 }

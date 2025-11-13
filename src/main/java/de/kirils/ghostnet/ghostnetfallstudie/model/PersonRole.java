@@ -1,4 +1,6 @@
 package de.kirils.ghostnet.ghostnetfallstudie.model;
 
-public class PersonRole {
+public enum PersonRole{
+    MELDEND,
+    BERGEND
 }
