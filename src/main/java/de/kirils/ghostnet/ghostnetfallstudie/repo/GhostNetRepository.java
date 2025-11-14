@@ -1,4 +1,7 @@
 package de.kirils.ghostnet.ghostnetfallstudie.repo;
 
-public class GhostNetRepository {
+import de.kirils.ghostnet.ghostnetfallstudie.model.GhostNet;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface GhostNetRepository extends JpaRepository<GhostNet,Long> {
 }
