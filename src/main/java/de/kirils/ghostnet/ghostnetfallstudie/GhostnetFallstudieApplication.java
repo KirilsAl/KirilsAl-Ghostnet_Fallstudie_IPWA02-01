@@ -2,7 +2,10 @@ package de.kirils.ghostnet.ghostnetfallstudie;
 
 import de.kirils.ghostnet.ghostnetfallstudie.model.GhostNet;
 import de.kirils.ghostnet.ghostnetfallstudie.model.NetStatus;
+import de.kirils.ghostnet.ghostnetfallstudie.model.Person;
+import de.kirils.ghostnet.ghostnetfallstudie.model.PersonRole;
 import de.kirils.ghostnet.ghostnetfallstudie.repo.GhostNetRepository;
+import de.kirils.ghostnet.ghostnetfallstudie.repo.PersonRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,8 +33,22 @@ public class GhostnetFallstudieApplication {
                     13L,
                     NetStatus.GEBORGEN
             );
-
-            ghostNetRepository.save(erstesNetz);
         };
     }
 }
+
+
+    /*@Bean
+    CommandLineRunner commandLineRunner(PersonRepository personRepository){
+        return args -> {
+            Person erstesPerson = new Person(
+                    "Kirils Aleksejevs",
+                    "015734315624",
+                    PersonRole.BERGEND
+            );
+            personRepository.save(erstesPerson);
+        };
+    }
+
+     */
+
