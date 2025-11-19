@@ -5,6 +5,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import  jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "GhostNet")
@@ -49,21 +52,34 @@ public class GhostNet {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    private String reportedAt;
+    private LocalDateTime reportedAt = LocalDateTime.now();
 
-    @Column(
+    /*@Column(
             name = "bergende_person_ID",
             nullable = true
+    )*/
+
+    @ManyToOne()
+    @JoinColumn(
+            name = "bergendePersonID",
+            referencedColumnName = "id",
+            nullable = true
     )
-    private Long bergendePersonID;
+    private Person bergendePersonID;
 
     @Column(
             name = "net_status",
             nullable = false
     )
+    @Enumerated(EnumType.STRING)
     private NetStatus netStatus;
 
-    public GhostNet(double gpsLat, double gpsLon, double sizeEstimate, String reportedAt, Long bergendePersonID, NetStatus netStatus) {
+    public GhostNet(double gpsLat,
+                    double gpsLon,
+                    double sizeEstimate,
+                    LocalDateTime reportedAt,
+                    Person bergendePersonID,
+                    NetStatus netStatus) {
         this.gpsLat = gpsLat;
         //this.id = id;
         this.gpsLon = gpsLon;
@@ -71,6 +87,10 @@ public class GhostNet {
         this.reportedAt = reportedAt;
         this.bergendePersonID = bergendePersonID;
         this.netStatus = netStatus;
+    }
+
+    public GhostNet() {
+
     }
 
     //public GhostNet() {}
@@ -108,19 +128,19 @@ public class GhostNet {
         this.sizeEstimate = sizeEstimate;
     }
 
-    public String getReportedAt() {
+    public LocalDateTime getReportedAt() {
         return reportedAt;
     }
 
-    public void setReportedAt(String reportedAt) {
+    public void setReportedAt(LocalDateTime reportedAt) {
         this.reportedAt = reportedAt;
     }
 
-    public Long getbergendePersonID() {
+    public Person getBergendePersonID() {
         return bergendePersonID;
     }
 
-    public void setbergendePersonID(Long bergendePersonID) {
+    public void setbergendePersonID(Person bergendePersonID) {
         this.bergendePersonID = bergendePersonID;
     }
 

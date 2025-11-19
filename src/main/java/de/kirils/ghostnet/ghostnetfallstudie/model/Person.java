@@ -9,7 +9,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Person")
 public class Person {
-    
+
     @Id
     @SequenceGenerator(
             name = "person_sequence",
@@ -25,7 +25,12 @@ public class Person {
             updatable = false
     )
     private Long id;
-    
+
+    @Column(
+            name = "personRole",
+            nullable = false
+    )
+    @Enumerated(EnumType.STRING)
     private PersonRole PersonRole;
     
     @Column(
@@ -35,11 +40,10 @@ public class Person {
     private String name;
 
     @Column(
-            name = "PhoneNumber",
-            nullable = false
+            name = "PhoneNumber"
     )
     private String phone;
-   
+
 
     public Long getId() {
         return id;
@@ -77,5 +81,9 @@ public class Person {
         this.name = name;
         this.phone = phone;
         this.PersonRole = personRole;
+    }
+
+    public Person() {
+
     }
 }
