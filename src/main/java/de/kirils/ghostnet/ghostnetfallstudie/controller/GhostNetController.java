@@ -76,7 +76,7 @@ public class GhostNetController {
         return ghostNetRepository.save(ghostNet);
     }
 
-    @PostMapping("/{netId/complete")
+    @PostMapping("/{netId}/complete")
     public GhostNet markNetAsComplete(@PathVariable Long netId) {
         GhostNet ghostNet = ghostNetRepository.findById(netId).orElseThrow(() -> new RuntimeException("GhostNet mit der ID " +  netId + " nicht gefunden"));
 
