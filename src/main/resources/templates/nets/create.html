@@ -1,10 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Geisternetz melden</title>
 </head>
 <body>
+
+<h1>Geisternetz melden</h1>
+
+<a th:href="@{/nets}">Zurück zur Übersicht</a>
+
+<form th:action="@{/nets/create}" th:object="${reportNetForm}" method="post">
+
+    <div>
+        <label for="gpsLat">Breitengrad (Latitude):</label>
+        <input type="number" step="0.000001" id="gpsLat" th:field="*{gpsLat}"/>
+    </div>
+
+    <div>
+        <label for="gpsLon">Längengrad (Longitude):</label>
+        <input type="number" step="0.000001" id="gpsLon" th:field="*{gpsLon}"/>
+    </div>
+
+    <div>
+        <label for="sizeEstimate">Geschätzte Größe (m²):</label>
+        <input type="number" step="0.1" id="sizeEstimate" th:field="*{sizeEstimate}"/>
+    </div>
+
+    <div>
+        <label for="name">Name (optional):</label>
+        <input type="text" id="name" th:field="*{name}"/>
+    </div>
+
+    <div>
+        <label for="phone">Telefon (optional):</label>
+        <input type="text" id="phone" th:field="*{phone}"/>
+    </div>
+
+    <div>
+        <button type="submit">Netz melden</button>
+    </div>
+
+</form>
 
 </body>
 </html>
