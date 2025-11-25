@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import java.util.List;
 
 import java.time.LocalDateTime;
 
@@ -80,4 +81,12 @@ public class ViewController {
         return "redirect:/nets";
 
     }
+
+    @GetMapping("/nets/open")
+    public String showOpenNets(Model model) {
+        var statuses = List.of(NetStatus.GEMELDET, NetStatus.BERGUNG_BEVORSTEHEND);
+        model.addAttribute("nets", ghostNetRepository.findByNetStatusIn(statuses));
+        return "nets/list";
+    }
+
 }

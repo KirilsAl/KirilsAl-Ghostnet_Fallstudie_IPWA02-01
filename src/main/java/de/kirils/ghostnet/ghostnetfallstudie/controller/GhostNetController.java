@@ -84,7 +84,7 @@ public class GhostNetController {
             throw new RuntimeException("Netz " + netId + "kann nicht als geborgen markiert werden, keine bergende Person eingetragen");
         }
 
-        ghostNet.setNetStatus(NetStatus.GEMELDET);
+        ghostNet.setNetStatus(NetStatus.GEBORGEN);
 
         return ghostNetRepository.save(ghostNet);
     }

@@ -4,13 +4,45 @@
     <meta charset="UTF-8">
     <title>Geisternetze</title>
 </head>
+
+<script>
+    async function markComplete(button) {
+        const id = button.getAttribute("data-id");
+        const response = await fetch(`/api/nets/${id}/complete`, {
+            method: "POST"
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("Fehler beim Markieren als geborgen");
+        }
+    }
+
+    async function markLost(button) {
+        const id = button.getAttribute("data-id");
+        const response = await fetch(`/api/nets/${id}/lost`, {
+            method: "POST"
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("Fehler beim Markieren als verschollen");
+        }
+    }
+</script>
+
 <body>
 
 <h1>Alle Geisternetze</h1>
 
-<p>
+<div>
+    <a th:href="@{/nets}">Alle Netze</a> |
+    <a th:href="@{/nets/open}">Offene Netze</a> |
     <a th:href="@{/nets/create}">Neues Netz melden</a>
-</p>
+</div>
+
 
 <table border="1">
     <tr>
@@ -19,6 +51,7 @@
         <th>Lon</th>
         <th>Größe</th>
         <th>Status</th>
+        <th>Aktionen</th>
     </tr>
     <tr th:each="net : ${nets}">
         <td th:text="${net.id}"></td>
@@ -26,6 +59,18 @@
         <td th:text="${net.gpsLon}"></td>
         <td th:text="${net.sizeEstimate}"></td>
         <td th:text="${net.netStatus}"></td>
+        <td>
+            <button type="button"
+                    th:attr="data-id=${net.id}"
+                    onclick="markComplete(this)">
+                Geborgen
+            </button>
+            <button type="button"
+                    th:attr="data-id=${net.id}"
+                    onclick="markLost(this)">
+                Verschollen
+            </button>
+        </td>
     </tr>
 </table>
 
