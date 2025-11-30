@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Geisternetze</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+
 </head>
 
 <script>
@@ -38,7 +40,7 @@
 <h1>Alle Geisternetze</h1>
 
 <div>
-    <a th:href="@{/nets}">Alle Netze</a> |
+    <a th:href="@{/templates/nets}">Alle Netze</a> |
     <a th:href="@{/nets/open}">Offene Netze</a> |
     <a th:href="@{/nets/create}">Neues Netz melden</a>
 </div>
@@ -51,20 +53,48 @@
         <th>Lon</th>
         <th>Größe</th>
         <th>Status</th>
+        <th>Bergende Person</th>
         <th>Aktionen</th>
     </tr>
+
     <tr th:each="net : ${nets}">
         <td th:text="${net.id}"></td>
         <td th:text="${net.gpsLat}"></td>
         <td th:text="${net.gpsLon}"></td>
         <td th:text="${net.sizeEstimate}"></td>
         <td th:text="${net.netStatus}"></td>
+
+        <!-- BERGENDE PERSON -->
         <td>
+            <!-- Falls schon gesetzt -->
+            <span th:if="${net.bergendePersonID != null}"
+                  th:text="'Person ID: ' + ${net.bergendePersonID.id}">
+            </span>
+
+            <!-- Falls noch NICHT gesetzt -->
+            <div th:if="${net.bergendePersonID == null}">
+                <input type="number" min="1"
+                       th:attr="id='assignInput_' + ${net.id}"
+                       placeholder="Person-ID">
+
+                <button type="button"
+                        th:attr="data-id=${net.id}"
+                        onclick="assignPerson(this)">
+                    Zuordnen
+                </button>
+            </div>
+        </td>
+
+        <!-- AKTIONEN -->
+        <td>
+            <!-- Button „Geborgen“ nur anzeigen, wenn bergende Person gesetzt -->
             <button type="button"
+                    th:if="${net.bergendePersonID != null}"
                     th:attr="data-id=${net.id}"
                     onclick="markComplete(this)">
                 Geborgen
             </button>
+
             <button type="button"
                     th:attr="data-id=${net.id}"
                     onclick="markLost(this)">
@@ -73,6 +103,56 @@
         </td>
     </tr>
 </table>
+
+<script>
+    async function assignPerson(button) {
+        const netId = button.getAttribute("data-id");
+        const input = document.getElementById("assignInput_" + netId);
+        const personId = input.value;
+
+        if (!personId) {
+            alert("Bitte eine Person-ID eingeben.");
+            return;
+        }
+
+        const response = await fetch(`/api/nets/${netId}/assign/${personId}`, {
+            method: "POST"
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("Fehler beim Zuordnen der Person.");
+        }
+    }
+
+    async function markComplete(button) {
+        const id = button.getAttribute("data-id");
+        const response = await fetch(`/api/nets/${id}/complete`, {
+            method: "POST"
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("Fehler beim Markieren als geborgen");
+        }
+    }
+
+    async function markLost(button) {
+        const id = button.getAttribute("data-id");
+        const response = await fetch(`/api/nets/${id}/lost`, {
+            method: "POST"
+        });
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert("Fehler beim Markieren als verschollen");
+        }
+    }
+</script>
+
 
 </body>
 </html>
