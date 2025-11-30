@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Geisternetze</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
-
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <script>
@@ -85,9 +84,7 @@
             </div>
         </td>
 
-        <!-- AKTIONEN -->
         <td>
-            <!-- Button „Geborgen“ nur anzeigen, wenn bergende Person gesetzt -->
             <button type="button"
                     th:if="${net.bergendePersonID != null}"
                     th:attr="data-id=${net.id}"
